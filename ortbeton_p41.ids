@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ids:ids xmlns:ids="http://standards.buildingsmart.org/IDS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://standards.buildingsmart.org/IDS https://standards.buildingsmart.org/IDS/1.0/ids.xsd">
+  <ids:info>
+    <ids:title>Team 3 - Ortbetonwaende Input fuer NPK-Zuordnung (Phase 41)</ids:title>
+    <ids:version>0.1</ids:version>
+    <ids:description>Prueft, ob jede Wand die Daten fuer die automatische NPK-Zuordnung liefert: Betonsorte im Namen, Betonmaterial und Nettovolumen groesser 0 m3. Prueft nicht, ob die Menge nach NPK-Messregeln korrekt ist.</ids:description>
+    <ids:date>2026-10-27</ids:date>
+  </ids:info>
+  <ids:specifications>
+    <ids:specification name="Ortbetonwand: Betonsorte, Material und NetVolume" ifcVersion="IFC4">
+      <ids:applicability minOccurs="1" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCWALL</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:attribute cardinality="required">
+          <ids:name>
+            <ids:simpleValue>Name</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:pattern value=".*Beton (C[0-9]{2}/[0-9]{2}|- Bestand).*" />
+            </xs:restriction>
+          </ids:value>
+        </ids:attribute>
+        <ids:property cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Qto_WallBaseQuantities</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>NetVolume</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:double">
+              <xs:minExclusive value="0" />
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+        <ids:material cardinality="required">
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="_Beton_.*" />
+            </xs:restriction>
+          </ids:value>
+        </ids:material>
+      </ids:requirements>
+    </ids:specification>
+  </ids:specifications>
+</ids:ids>
